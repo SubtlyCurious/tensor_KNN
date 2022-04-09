@@ -34,3 +34,23 @@ x = list(zip(buying, maint, door, persons, lug_boot, safety)) #features
 y = list(cls) #labels
 
 x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=0.1)
+
+#Training model and printing accuracy
+model = KNeighborsClassifier(n_neighbors = 9)
+model.fit(x_train, y_train)
+accuracy = model.score(x_test, y_test)
+print(accuracy)
+
+#predict model
+predicted = model.predict(x_test)
+
+#Given integer returns the string
+names= ["unacc", "acc", "good", "vgood"]
+
+#printing out all the information collected
+for x in range(len(x_test)):
+    print(f"Predicted: {names[predicted[x]]}, Data: {x_test[x]}, Actual: {names[y_test[x]]}")
+
+    #Finding the neighbors
+    n = model.kneighbors([x_test[x]], 9, True)
+    print(f"N: {n},")
